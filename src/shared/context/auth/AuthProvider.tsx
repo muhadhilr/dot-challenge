@@ -30,15 +30,17 @@ export const AuthProvider: React.FC<{ children: ReactNode }> = ({
   };
   useEffect(() => {
     const checkingUser = async (): Promise<void> => {
-      try {
-        const token = sessionStorage.getItem("app_1");
-        if (token) {
-          await userRefresh();
+      if (!sessionStorage.getItem("app_1")) {
+        try {
+          const token = sessionStorage.getItem("app_1");
+          if (token) {
+            await userRefresh();
+          }
+        } catch (error) {
+          console.error("Login Services: Checking User: ", error);
+          toast.error("Your session has expired, please login again");
+          throw error;
         }
-      } catch (error) {
-        console.error("Login Services: Checking User: ", error);
-        toast.error("Your session has expired, please login again");
-        throw error;
       }
     };
 
