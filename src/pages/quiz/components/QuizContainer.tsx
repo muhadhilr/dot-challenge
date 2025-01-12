@@ -3,6 +3,7 @@ import Form from "./form-quiz/Form";
 import { FetchQuiz } from "@shared/services/quiz/quizServices";
 import { IQuizData } from "@shared/models/types/quiz";
 import Footer from "./footer/Footer";
+import Timer from "./timer/Timer";
 
 const QuizContainer = () => {
   const [data, setData] = useState<IQuizData[]>([]);
@@ -46,6 +47,7 @@ const QuizContainer = () => {
         save_answer={(answer: string) => saveAnswer(answer, count)}
       />
       <Footer number_of_questions={data.length} current_question={count} />
+      <Timer />
     </section>
   );
 };
