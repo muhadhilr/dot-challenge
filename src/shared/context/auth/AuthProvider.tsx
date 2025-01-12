@@ -1,5 +1,9 @@
 import { ILogin } from "@shared/models/types/auth";
-import { userLogin, userRefresh } from "@shared/services/auth/authServices";
+import {
+  userData,
+  userLogin,
+  userRefresh,
+} from "@shared/services/auth/authServices";
 import { ReactNode, useEffect, useState } from "react";
 import { AuthContext } from "./AuthContext";
 import { toast } from "react-toastify";
@@ -41,6 +45,9 @@ export const AuthProvider: React.FC<{ children: ReactNode }> = ({
           toast.error("Your session has expired, please login again");
           throw error;
         }
+      } else {
+        const userdata = await userData();
+        setUser(userdata);
       }
     };
 

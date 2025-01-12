@@ -11,6 +11,18 @@ export const userLogin = async (data: ILogin): Promise<IAuthResponse> => {
   }
 };
 
+export const userData = async (): Promise<string> => {
+  try {
+    const response = await authInstance.get("auth/me", {
+      headers: { Authorization: `Bearer ${sessionStorage.getItem("app_1")}` },
+    });
+    return response.data.username;
+  } catch (error) {
+    console.error("Login Services: User Data: ", error);
+    throw new Error("Login failed");
+  }
+};
+
 export const userRefresh = async (): Promise<void> => {
   try {
     const refresh = await authInstance.post("auth/refresh");
