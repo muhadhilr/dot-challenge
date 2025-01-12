@@ -39,6 +39,12 @@ const QuizContainer = () => {
     setCount(count + 1);
   };
 
+  const handleBack = () => {
+    if (count > 0) {
+      setCount(count - 1);
+    }
+  };
+
   return (
     <section className="min-h-screen flex flex-col justify-center items-center">
       <Form
@@ -46,7 +52,11 @@ const QuizContainer = () => {
         count={count}
         save_answer={(answer: string) => saveAnswer(answer, count)}
       />
-      <Footer number_of_questions={data.length} current_question={count} />
+      <Footer
+        number_of_questions={data.length}
+        current_question={count}
+        handle_back={handleBack}
+      />
       <Timer />
     </section>
   );
