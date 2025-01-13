@@ -8,8 +8,9 @@ const HomeContainer = () => {
   const navigate = useNavigate();
 
   const handleStart = () => {
-    localStorage.setItem("timer", "600");
-    localStorage.setItem("answers", JSON.stringify({}));
+    if (!localStorage.getItem("timer")) {
+      localStorage.setItem("timer", "600");
+    }
     navigate("/quiz");
   };
 

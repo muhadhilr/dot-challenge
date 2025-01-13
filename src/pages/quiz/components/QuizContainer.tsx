@@ -4,11 +4,16 @@ import { FetchQuiz } from "@shared/services/quiz/quizServices";
 import { IQuizData } from "@shared/models/types/quiz";
 import Footer from "./footer/Footer";
 import Timer from "./timer/Timer";
+import Loader from "@shared/components/loader/Loader";
 
 const QuizContainer = () => {
   const [data, setData] = useState<IQuizData[]>([]);
-  const [answers, setAnswers] = useState({});
-  const [count, setCount] = useState(0);
+  const [answers, setAnswers] = useState<{ [key: number]: string }>(() => {
+    const savedAnswers = localStorage.getItem("answers");
+    return savedAnswers ? JSON.parse(savedAnswers) : {};
+  });
+  const [count, setCount] = useState<number>(0);
+  const [loading, setLoading] = useState<boolean>(true);
 
   useEffect(() => {
     const fetchData = async (): Promise<void> => {
@@ -16,12 +21,15 @@ const QuizContainer = () => {
         try {
           await FetchQuiz();
           setData(JSON.parse(localStorage.getItem("question") || ""));
+          setLoading(false);
         } catch (error) {
           console.error("Error fetching data:", error);
         }
       } else {
         setData(JSON.parse(localStorage.getItem("question") || ""));
         setAnswers(JSON.parse(localStorage.getItem("answers") || ""));
+        setCount(parseInt(localStorage.getItem("count") || "0"));
+        setLoading(false);
       }
     };
     fetchData();
@@ -37,6 +45,7 @@ const QuizContainer = () => {
       [count]: answer,
     }));
     setCount(count + 1);
+    localStorage.setItem("count", String(count + 1));
   };
 
   const handleBack = () => {
@@ -45,8 +54,12 @@ const QuizContainer = () => {
     }
   };
 
+  if (loading) {
+    return <Loader />;
+  }
+
   return (
-    <section className="min-h-screen flex flex-col justify-center items-center">
+    <section className="min-h-screen flex flex-col justify-center items-center p-8">
       <Form
         question_data={data[count]}
         count={count}

@@ -1,6 +1,7 @@
 import Button from "@shared/components/button/Button";
 import { IQuizData } from "@shared/models/types/quiz";
 import React, { useEffect, useState } from "react";
+import he from "he";
 
 interface IQuizForm {
   question_data: IQuizData | undefined;
@@ -10,17 +11,18 @@ interface IQuizForm {
 
 const Form = ({ question_data, count, save_answer }: IQuizForm) => {
   const [answers, setAnswers] = useState<string[]>([]);
+
   useEffect(() => {
-    const data = JSON.parse(localStorage.getItem("answers") || "");
+    const data = JSON.parse(localStorage.getItem("answers") || "[]");
     if (data) {
       setAnswers(data);
     }
-  }, [answers]);
+  }, [save_answer]);
 
-  return (
+  return (  
     <div className="flex flex-col gap-2 items-center">
       <p className="text-lg font-light">Question {count + 1}</p>
-      <h2 className="text-3xl font-bold">{question_data?.question}</h2>
+      <h2 className="text-3xl font-bold">{question_data ? he.decode(question_data.question) : ""}</h2>
       <div className="grid grid-cols-2 gap-4 mt-8">
         {question_data?.options.map((answer, index) =>
           answers[count] === answer ? (

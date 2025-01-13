@@ -1,6 +1,11 @@
+import { useEffect } from "react";
 import LoginForm from "./form/LoginForm";
 
 const AuthContainer = () => {
+  useEffect(() => {
+    localStorage.clear();
+  }, []);
+
   return (
     <section className="flex flex-col justify-center text-black gap-8">
       <div>
