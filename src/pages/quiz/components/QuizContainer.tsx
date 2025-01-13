@@ -5,6 +5,7 @@ import { IQuizData } from "@shared/models/types/quiz";
 import Footer from "./footer/Footer";
 import Timer from "./timer/Timer";
 import Loader from "@shared/components/loader/Loader";
+import { useNavigate } from "react-router-dom";
 
 const QuizContainer = () => {
   const [data, setData] = useState<IQuizData[]>([]);
@@ -14,6 +15,7 @@ const QuizContainer = () => {
   });
   const [count, setCount] = useState<number>(0);
   const [loading, setLoading] = useState<boolean>(true);
+  const navigate = useNavigate();
 
   useEffect(() => {
     const fetchData = async (): Promise<void> => {
@@ -45,6 +47,11 @@ const QuizContainer = () => {
       [count]: answer,
     }));
     setCount(count + 1);
+
+    if (count >= data.length - 1) {
+      navigate("/result");
+    }
+
     localStorage.setItem("count", String(count + 1));
   };
 
