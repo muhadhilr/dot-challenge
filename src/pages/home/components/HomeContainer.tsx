@@ -6,16 +6,20 @@ import { TypeAnimation } from "react-type-animation";
 const HomeContainer = () => {
   const { user, logout } = useAuth();
   const navigate = useNavigate();
+  const timer = localStorage.getItem("timer");
 
   const handleStart = () => {
-    if (!localStorage.getItem("timer")) {
-      localStorage.setItem("timer", "600");
-    }
+    localStorage.clear();
+    localStorage.setItem("timer", "600");
+    navigate("/quiz");
+  };
+
+  const handleContinue = () => {
     navigate("/quiz");
   };
 
   return (
-    <section className="h-screen flex flex-col justify-center items-center gap-5 bg-main-bg bg-cover z-1">
+    <section className="h-screen flex flex-col justify-center items-center gap-10 bg-main-bg bg-cover z-1 p-2">
       <TypeAnimation
         sequence={[
           `Hi ${user},welcome!`,
@@ -26,12 +30,17 @@ const HomeContainer = () => {
           1000,
           "Best of luck!",
         ]}
-        className="text-6xl font-bold text-white"
+        className="text-4xl md:text-6xl font-bold text-white text-center"
       />
-      <div className="flex gap-5">
+      <div className="flex flex-col md:flex-row gap-5">
         <Button variant="primary" onClick={() => handleStart()}>
           Start Practicing
         </Button>
+        {timer && (
+          <Button variant="primary" onClick={() => handleContinue()}>
+            Continue Practicing
+          </Button>
+        )}
         <Button variant="primary" onClick={() => logout()}>
           Logout
         </Button>

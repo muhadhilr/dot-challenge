@@ -19,11 +19,13 @@ const Form = ({ question_data, count, save_answer }: IQuizForm) => {
     }
   }, [save_answer]);
 
-  return (  
+  return (
     <div className="flex flex-col gap-2 items-center">
       <p className="text-lg font-light">Question {count + 1}</p>
-      <h2 className="text-3xl font-bold">{question_data ? he.decode(question_data.question) : ""}</h2>
-      <div className="grid grid-cols-2 gap-4 mt-8">
+      <h2 className="text-2xl text-center md:text-3xl font-bold">
+        {question_data ? he.decode(question_data.question) : ""}
+      </h2>
+      <div className="flex flex-col md:grid md:grid-cols-2 gap-4 mt-8">
         {question_data?.options.map((answer, index) =>
           answers[count] === answer ? (
             <Button
@@ -44,6 +46,12 @@ const Form = ({ question_data, count, save_answer }: IQuizForm) => {
           )
         )}
       </div>
+      {count === 4 && (
+        <p className="text-center mt-4 text-red-700 font-semibold text-sm md:text-lg">
+          You have reached the end of the quiz. <br />If you click an answer, it will
+          be automatically submitted.
+        </p>
+      )}
     </div>
   );
 };

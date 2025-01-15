@@ -15,7 +15,7 @@ const Modal = ({ isOpen, onClose, children, isFixed = false }: Props) => {
 
   return (
     <div className="fixed inset-0 flex items-center justify-center bg-black bg-opacity-50 transition-opacity duration-300 ease-in-out opacity-0 opacity-100">
-        <div className="relative bg-white rounded-lg p-6 w-1/2">
+        <div className="relative bg-white rounded-lg p-6 w-4/5 md:w-1/2">
             {!isFixed && <Button variant="secondary" onClick={onClose} className="absolute right-6 top-6">Close</Button>}
             {children}
         </div>

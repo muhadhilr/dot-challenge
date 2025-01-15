@@ -58,6 +58,8 @@ const QuizContainer = () => {
   const handleBack = () => {
     if (count > 0) {
       setCount(count - 1);
+    } else {
+      navigate("/");
     }
   };
 
@@ -66,7 +68,7 @@ const QuizContainer = () => {
   }
 
   return (
-    <section className="min-h-screen flex flex-col justify-center items-center p-8">
+    <section className="h-screen flex flex-col justify-center items-center p-2">
       <Form
         question_data={data[count]}
         count={count}
