@@ -21,7 +21,7 @@ The application has been deployed and can be accessed via the following link:
 To run this project locally, follow these steps:
 1. **Clone this repository** to your device:
  ```bash
- git clone https://github.com/username/quizeez.git
+ git clone https://github.com/muhadhilr/quizeez.git
  ```
 2. **Navigate to the project directory**:
  ```bash
